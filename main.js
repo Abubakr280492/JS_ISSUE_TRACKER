@@ -33,6 +33,32 @@ function saveIssue(e) {
     e.preventDefault();
 }
 
+function setStatusClosed(id){
+    var issues = JSON.parse(localStorage.getItem('issues'));
+
+    for(var i=0; i<issues.length; i++){
+        if(issues[i].id ==id){
+            issues[i].status = 'Closed';
+        }
+    }   
+    localStorage.setItem('issues',JSON.stringify(issues));
+
+    fetchIssues();
+}
+
+function deleteIsuues(id){
+    var issues = JSON.parse(localStorage.getItem('issues'));
+
+    for(var i=0; i<issues.length; i++){
+        if(issues[i].id ==id){
+            issues.splice(i, 1);
+        }
+    }   
+    localStorage.setItem('issues',JSON.stringify(issues));
+
+    fetchIssues();
+}
+
 
 function fetchIssues(){
     var issues = JSON.parse(localStorage.getItem('issues'));
@@ -52,9 +78,9 @@ function fetchIssues(){
                                 '<p><span class="label label-info">'+ status + '</span></p>'+
                                 '<h3>' + desc + '</h3>' +
                                 '<p><span class="glyphicon glyphicon-time">'+ severity + '</span></p>'+
-                                '<p><span class="glyphicon glyphicon-user">'+ AssignedTo + '</span></p>'+
-                                '<a href"#" onclick="SetStatusClosed(\''+id+'\')" class="btn btn-warning">Close</a>'+
-                                '<a href"#" onclick="deleteIsuue(\''+id+'\')" class="btn btn-danger">Delete</a>'+
+                                '<p><span class="glyphicon glyphicon-user">' + assignedTo + '</span></p>'+
+                                '<a href"#" onclick="setStatusClosed(\''+id+'\')" class="btn btn-warning">Close</a>'+
+                                '<a href"#" onclick="deleteIsuues(\''+id+'\')" class="btn btn-danger">Delete</a>'+
                                 '</div>';
                                 
 }}
